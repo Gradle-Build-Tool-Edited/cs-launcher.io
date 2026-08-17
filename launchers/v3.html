@@ -1,0 +1,36 @@
+<!-- launchers/v3.html -->
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+  <title>CS Launcher V3 · جزئیات لانچر</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+  <div id="toast" class="toast"></div>
+
+  <nav class="navbar container" style="max-width:100%;">
+    <div class="logo"><i class="fas fa-cubes"></i> CS Launcher</div>
+    <div class="hamburger" onclick="toggleMenu()"><i class="fas fa-bars"></i></div>
+    <div class="nav-links" id="navLinks">
+      <a href="../index.html"><i class="fas fa-home"></i> خانه</a>
+      <a href="../index.html#launchers"><i class="fas fa-rocket"></i> لانچرها</a>
+      <a href="../index.html#compare"><i class="fas fa-chart-simple"></i> مقایسه</a>
+      <a href="../index.html#about"><i class="fas fa-info-circle"></i> درباره</a>
+      <a href="../admin/index.html"><i class="fas fa-user-cog"></i> مدیریت</a>
+    </div>
+  </nav>
+
+  <div class="container breadcrumb">
+    <a href="../index.html">خانه</a> / <a href="../index.html#launchers">لانچرها</a> / <span>CS Launcher V3</span>
+  </div>
+
+  <main class="container" id="mainContent"></main>
+
+  <script src="../js/data.js"></script>
+  <script src="../js/launcher.js"></script>
+  <script src="../js/main.js"></script>
+</body>
+</html>
