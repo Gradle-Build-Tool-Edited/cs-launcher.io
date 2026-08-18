@@ -1,4 +1,4 @@
-here/* js/data.js */
+/* js/data.js */
 const DEFAULT_LAUNCHER_DATA = {
   v1: {
     id: 'v1',
@@ -19,7 +19,7 @@ const DEFAULT_LAUNCHER_DATA = {
         id: 'v1-main', 
         name: 'سرور اصلی', 
         type: 'Direct', 
-        url: 'https://cdn.imgurl.ir/uploads/m314320_ChatFormatter_v1.3.5.jar', // 🔴 لینک V1 را اینجا جایگزین کنید
+        url: 'https://github.com/Mineradi/CS-LAUNCHER/releases/download/v.1.0.0/CSLauncher.apk', // 🔴 لینک V1 را اینجا جایگزین کنید
         recommended: true, 
         enabled: true 
       },
@@ -27,7 +27,7 @@ const DEFAULT_LAUNCHER_DATA = {
         id: 'v1-mirror1', 
         name: 'Mirror 1', 
         type: 'Direct', 
-        url: 'https://cdn.imgurl.ir/uploads/m314320_ChatFormatter_v1.3.5.jar', // 🔴 لینک میرror V1 را اینجا جایگزین کنید
+        url: 'https://github.com/Mineradi/CS-LAUNCHER/releases/download/v.1.0.0/CSLauncher.apk', // 🔴 لینک میرror V1 را اینجا جایگزین کنید
         recommended: false, 
         enabled: true 
       },
@@ -35,7 +35,7 @@ const DEFAULT_LAUNCHER_DATA = {
         id: 'v1-mirror2', 
         name: 'Mirror 2', 
         type: 'Direct', 
-        url: 'https://cdn.imgurl.ir/uploads/m314320_ChatFormatter_v1.3.5.jar', // 🔴 غیرفعال - با # بماند یا لینک واقعی جایگزین شود
+        url: 'https://github.com/Mineradi/CS-LAUNCHER/releases/download/v.1.0.0/CSLauncher.apk', // 🔴 غیرفعال - با # بماند یا لینک واقعی جایگزین شود
         recommended: false, 
         enabled: true 
       }
@@ -60,7 +60,7 @@ const DEFAULT_LAUNCHER_DATA = {
         id: 'v2-main', 
         name: 'سرور اصلی', 
         type: 'Direct', 
-        url: 'https://example.com/downloads/cs-launcher-v2.apk', // 🔴 لینک V2 را اینجا جایگزین کنید
+        url: 'https://github.com/craftstudioteam/CS-LAUNCHER-v2/releases/download/v2.10/CS-LAUNCHER-V2.apk', // 🔴 لینک V2 را اینجا جایگزین کنید
         recommended: true, 
         enabled: true 
       },
@@ -68,7 +68,7 @@ const DEFAULT_LAUNCHER_DATA = {
         id: 'v2-mirror1', 
         name: 'Mirror 1', 
         type: 'Direct', 
-        url: 'https://mirror1.example.com/cs-launcher-v2.apk', // 🔴 لینک میرror V2 را اینجا جایگزین کنید
+        url: 'https://github.com/craftstudioteam/CS-LAUNCHER-v2/releases/download/v2.10/CS-LAUNCHER-V2.apk', // 🔴 لینک میرror V2 را اینجا جایگزین کنید
         recommended: false, 
         enabled: true 
       }
@@ -93,7 +93,7 @@ const DEFAULT_LAUNCHER_DATA = {
         id: 'v3-main', 
         name: 'سرور اصلی', 
         type: 'Direct', 
-        url: 'https://example.com/downloads/cs-launcher-v3.apk', // 🔴 لینک V3 را اینجا جایگزین کنید
+        url: 'https://github.com/craftstudioteam/CS-LAUNCHER-v3/releases/download/v3/CS-LAUNCHER-V3.apk', // 🔴 لینک V3 را اینجا جایگزین کنید
         recommended: true, 
         enabled: true 
       },
@@ -101,7 +101,7 @@ const DEFAULT_LAUNCHER_DATA = {
         id: 'v3-mirror1', 
         name: 'Mirror 1', 
         type: 'Direct', 
-        url: 'https://mirror1.example.com/cs-launcher-v3.apk', // 🔴 لینک میرror V3 را اینجا جایگزین کنید
+        url: 'https://github.com/craftstudioteam/CS-LAUNCHER-v3/releases/download/v3/CS-LAUNCHER-V3.apk', // 🔴 لینک میرror V3 را اینجا جایگزین کنید
         recommended: false, 
         enabled: true 
       },
