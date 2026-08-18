@@ -60,7 +60,7 @@ const DEFAULT_LAUNCHER_DATA = {
         id: 'v2-main', 
         name: 'سرور اصلی', 
         type: 'Direct', 
-        url: '/api/download/v2/main', // 🔴 لینک V2 را اینجا جایگزین کنید
+        url: 'https://github.com/Mineradi/CS-LAUNCHER/releases/download/v.1.0.0/CSLauncher.apk', // 🔴 لینک V2 را اینجا جایگزین کنید
         recommended: true, 
         enabled: true 
       },
