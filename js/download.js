@@ -16,7 +16,7 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 
   renderDownloadPage(launcher);
-  updateBreadcrumb(launcher.name);
+  updateBreadcrumb(launcher.name, id);
 });
 
 function renderDownloadPage(l) {
@@ -74,10 +74,14 @@ function renderDownloadPage(l) {
   `;
 }
 
-function updateBreadcrumb(name) {
+function updateBreadcrumb(name, id) {
   const bc = document.querySelector('.breadcrumb');
   if (bc) {
-    bc.innerHTML = `<a href="../index.html">خانه</a> / <a href="../index.html#launchers">لانچرها</a> / <a href="../launchers/${name.toLowerCase().replace(/\s/g,'')}.html">${escapeHTML(name)}</a> / <span>دانلود</span>`;
+    const safeId = VERSION_KEYS.includes(id) ? id : '';
+    const launcherLink = safeId
+      ? `<a href="../launchers/${safeId}.html">${escapeHTML(name)}</a>`
+      : `<span>${escapeHTML(name)}</span>`;
+    bc.innerHTML = `<a href="../index.html">خانه</a> / <a href="../index.html#launchers">لانچرها</a> / ${launcherLink} / <span>دانلود</span>`;
   }
 }
 
@@ -101,7 +105,7 @@ window.handleDownload = function(id, idx) {
   }
 
   if (dl.url && dl.url !== '#') {
-    window.open(dl.url, '_blank');
+    window.location.href = dl.url;
   } else {
     showToast('لینک دانلود هنوز اضافه نشده است.');
   }

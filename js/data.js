@@ -19,7 +19,7 @@ const DEFAULT_LAUNCHER_DATA = {
         id: 'v1-main', 
         name: 'سرور اصلی', 
         type: 'Direct', 
-        url: 'https://github.com/Mineradi/CS-LAUNCHER/releases/download/v.1.0.0/CSLauncher.apk', // 🔴 لینک V1 را اینجا جایگزین کنید
+        url: '/api/download/v1/main', // 🔴 لینک V1 را اینجا جایگزین کنید
         recommended: true, 
         enabled: true 
       },
@@ -27,7 +27,7 @@ const DEFAULT_LAUNCHER_DATA = {
         id: 'v1-mirror1', 
         name: 'Mirror 1', 
         type: 'Direct', 
-        url: 'https://github.com/Mineradi/CS-LAUNCHER/releases/download/v.1.0.0/CSLauncher.apk', // 🔴 لینک میرror V1 را اینجا جایگزین کنید
+        url: '/api/download/v1/main', // 🔴 لینک میرror V1 را اینجا جایگزین کنید
         recommended: false, 
         enabled: true 
       },
@@ -35,7 +35,7 @@ const DEFAULT_LAUNCHER_DATA = {
         id: 'v1-mirror2', 
         name: 'Mirror 2', 
         type: 'Direct', 
-        url: 'https://github.com/Mineradi/CS-LAUNCHER/releases/download/v.1.0.0/CSLauncher.apk', // 🔴 غیرفعال - با # بماند یا لینک واقعی جایگزین شود
+        url: '/api/download/v1/main', // 🔴 غیرفعال - با # بماند یا لینک واقعی جایگزین شود
         recommended: false, 
         enabled: true 
       }
@@ -60,7 +60,7 @@ const DEFAULT_LAUNCHER_DATA = {
         id: 'v2-main', 
         name: 'سرور اصلی', 
         type: 'Direct', 
-        url: 'https://github.com/craftstudioteam/CS-LAUNCHER-v2/releases/download/v2.10/CS-LAUNCHER-V2.apk', // 🔴 لینک V2 را اینجا جایگزین کنید
+        url: '/api/download/v2/main', // 🔴 لینک V2 را اینجا جایگزین کنید
         recommended: true, 
         enabled: true 
       },
@@ -68,7 +68,7 @@ const DEFAULT_LAUNCHER_DATA = {
         id: 'v2-mirror1', 
         name: 'Mirror 1', 
         type: 'Direct', 
-        url: 'https://github.com/craftstudioteam/CS-LAUNCHER-v2/releases/download/v2.10/CS-LAUNCHER-V2.apk', // 🔴 لینک میرror V2 را اینجا جایگزین کنید
+        url: '/api/download/v2/main', // 🔴 لینک میرror V2 را اینجا جایگزین کنید
         recommended: false, 
         enabled: true 
       }
@@ -93,7 +93,7 @@ const DEFAULT_LAUNCHER_DATA = {
         id: 'v3-main', 
         name: 'سرور اصلی', 
         type: 'Direct', 
-        url: 'https://github.com/craftstudioteam/CS-LAUNCHER-v3/releases/download/v3/CS-LAUNCHER-V3.apk', // 🔴 لینک V3 را اینجا جایگزین کنید
+        url: '/api/download/v3/main', // 🔴 لینک V3 را اینجا جایگزین کنید
         recommended: true, 
         enabled: true 
       },
@@ -101,7 +101,7 @@ const DEFAULT_LAUNCHER_DATA = {
         id: 'v3-mirror1', 
         name: 'Mirror 1', 
         type: 'Direct', 
-        url: 'https://github.com/craftstudioteam/CS-LAUNCHER-v3/releases/download/v3/CS-LAUNCHER-V3.apk', // 🔴 لینک میرror V3 را اینجا جایگزین کنید
+        url: '/api/download/v3/main', // 🔴 لینک میرror V3 را اینجا جایگزین کنید
         recommended: false, 
         enabled: true 
       },
@@ -109,9 +109,9 @@ const DEFAULT_LAUNCHER_DATA = {
         id: 'v3-mirror2', 
         name: 'Mirror 2', 
         type: 'Direct', 
-        url: '#', // 🔴 غیرفعال - با # بماند یا لینک واقعی جایگزین شود
+        url: '#', // 🔴 غیرفعال - لینک واقعی را جایگزین کنید
         recommended: false, 
-        enabled: true 
+        enabled: false 
       }
     ]
   }
@@ -124,30 +124,56 @@ const VERSION_KEYS = ['v1', 'v2', 'v3'];
 let launcherData = {};
 
 function loadData() {
+  const defaults = JSON.parse(JSON.stringify(DEFAULT_LAUNCHER_DATA));
+
   try {
     const stored = localStorage.getItem('cs_launcher_data');
-    if (stored) {
-      const parsed = JSON.parse(stored);
-      // Merge with defaults to ensure all fields exist
-      for (const key of VERSION_KEYS) {
-        if (parsed[key]) {
-          launcherData[key] = { ...DEFAULT_LAUNCHER_DATA[key], ...parsed[key] };
-          // Deep merge downloads
-          if (parsed[key].downloads) {
-            launcherData[key].downloads = parsed[key].downloads;
-          }
-        } else {
-          launcherData[key] = JSON.parse(JSON.stringify(DEFAULT_LAUNCHER_DATA[key]));
-        }
-      }
-    } else {
-      launcherData = JSON.parse(JSON.stringify(DEFAULT_LAUNCHER_DATA));
+    if (!stored) {
+      launcherData = defaults;
+      return launcherData;
     }
+
+    const parsed = JSON.parse(stored);
+    if (!parsed || typeof parsed !== 'object' || Array.isArray(parsed)) {
+      throw new Error('Invalid saved data');
+    }
+
+    launcherData = {};
+    for (const key of VERSION_KEYS) {
+      const saved = parsed[key];
+      const base = defaults[key];
+
+      if (!saved || typeof saved !== 'object' || Array.isArray(saved)) {
+        launcherData[key] = base;
+        continue;
+      }
+
+      launcherData[key] = { ...base, ...saved };
+
+      // Downloads must always be an array.
+      launcherData[key].downloads = Array.isArray(saved.downloads)
+        ? saved.downloads.filter(d => d && typeof d === 'object').map((d, i) => ({
+            id: String(d.id || `dl-${key}-${i}`),
+            name: String(d.name || `لینک ${i + 1}`),
+            type: String(d.type || 'Direct'),
+            url: typeof d.url === 'string' ? d.url : '#',
+            recommended: d.recommended === true,
+            enabled: d.enabled !== false
+          }))
+        : base.downloads;
+
+      // Keep these fields safe for rendering.
+      launcherData[key].features = Array.isArray(saved.features)
+        ? saved.features.map(String).filter(Boolean)
+        : base.features;
+    }
+
+    return launcherData;
   } catch (e) {
-    console.warn('Failed to load data from localStorage, using defaults');
-    launcherData = JSON.parse(JSON.stringify(DEFAULT_LAUNCHER_DATA));
+    console.warn('Failed to load data from localStorage, using defaults', e);
+    launcherData = defaults;
+    return launcherData;
   }
-  return launcherData;
 }
 
 function saveData() {
